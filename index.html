@@ -4,44 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Think Golf Academy Audio Looper</title>
+    <title>Custom Audio Player</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="wrapper">
-        <div class="container">
-            <div class="music-container" id="music-container">
-                <div class="music-info">
-                    <h4 id="title">Please upload a file</h4>
-                    <div class="progress-container" id="progress-container">
-                        <div class="progress" id="progress"></div>
-                    </div>
-                </div>
-
-                <audio src="#" id="audio"></audio>
-
-                <input type="file" class="audio-file" id="audio-file" accept="audio/*">
-                <input type="number" class="delay-input" id="delay-input" min="0" placeholder="Delay in seconds" value="0">
-
-                <div class="img-container">
-                    <img src="https://encompass.pics/images/2023/11/06/jdm.pd_just_the_texture_fo_short_green_grass_in_super_high_reso_0c91a8f2-51e8-451a-9f1c-f50440150033.png" alt="music-cover" id="cover" />
-                </div>
-                <div class="navigation">
-                    <button id="prev" class="action-btn">
-                        <!-- Previous Icon -->
-                    </button>
-                    <button id="play" class="action-btn action-btn-big">
-                        <!-- Play Icon -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
-                            <path d="M11.596 8.697l-6.363 3.692V4.005l6.363 3.692z"/>
-                        </svg>
-                    </button>
-                    <button id="next" class="action-btn">
-                        <!-- Next Icon -->
-                    </button>
-                </div>
+    <div class="audio-player">
+        <label for="audio-file" class="audio-input">
+            <input type="file" id="audio-file" accept="audio/*" style="border-radius: 100px; background-color: #f0f0f0; padding: 10px; width: 100%; max-width: 600px; margin: 0 auto; box-shadow: 0 4px 8px rgba(1, 1, 1, 0.8); display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Roboto', sans-serif;">
+            <span class="file-input-text">Upload Your Audio</span> <!-- Text updated here -->
+            <svg viewBox="0 0 16 16" class="bi bi-upload" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+            </svg>
+        </label>
+        <div class="playback-controls">
+            <button id="play-btn" class="control-btn">
+                <!-- Play Icon -->
+                <svg viewBox="0 0 16 16" class="bi bi-play-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.596 8.697l-6.363 3.692V4.005l6.363 3.692z"/>
+                </svg>
+            </button>
+            <div class="slider-container">
+                <input type="range" id="delay-slider" class="delay-slider" min="0" max="10" value="0" step="0.1">
+                <span id="slider-value" class="slider-value">0s</span>
             </div>
+            <div class="text-container">
+                <span id="delay-label" class="delay-label">Your Delay</span>
         </div>
+        <audio id="audio" controls style="display: none;"></audio>
     </div>
     <script src="script.js"></script>
 </body>
