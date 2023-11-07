@@ -1,23 +1,46 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Think Golf Audio Player</title>
+    <title>Think Golf Academy Audio Looper</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="audio-player">
-        <div class="controls">
-            <input type="file" class="audio-file" accept="audio/*">
-            <input type="number" class="delay-input" min="0" placeholder="Delay in seconds" value="0">
-            <button class="play-pause-button">Play</button>
-            <button class="stop-button">Stop</button>
-        </div>
-        <div class="timeline">
-            <div class="progress"></div>
+    <div class="wrapper">
+        <div class="container">
+            <div class="music-container" id="music-container">
+                <div class="music-info">
+                    <h4 id="title">Please upload a file</h4>
+                    <div class="progress-container" id="progress-container">
+                        <div class="progress" id="progress"></div>
+                    </div>
+                </div>
+
+                <audio src="#" id="audio"></audio>
+
+                <input type="file" class="audio-file" id="audio-file" accept="audio/*">
+                <input type="number" class="delay-input" id="delay-input" min="0" placeholder="Delay in seconds" value="0">
+
+                <div class="img-container">
+                    <img src="https://encompass.pics/images/2023/11/06/jdm.pd_just_the_texture_fo_short_green_grass_in_super_high_reso_0c91a8f2-51e8-451a-9f1c-f50440150033.png" alt="music-cover" id="cover" />
+                </div>
+                <div class="navigation">
+                    <button id="prev" class="action-btn">
+                        <!-- Previous Icon -->
+                    </button>
+                    <button id="play" class="action-btn action-btn-big">
+                        <!-- Play Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                            <path d="M11.596 8.697l-6.363 3.692V4.005l6.363 3.692z"/>
+                        </svg>
+                    </button>
+                    <button id="next" class="action-btn">
+                        <!-- Next Icon -->
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
