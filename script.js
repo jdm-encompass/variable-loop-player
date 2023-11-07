@@ -1,57 +1,71 @@
+// Select elements from the DOM
+const musicContainer = document.getElementById('music-container');
+const playBtn = document.getElementById('play');
+const audio = document.getElementById('audio');
+const progressContainer = document.getElementById('progress-container');
+const progress = document.getElementById('progress');
+const audioFileInput = document.getElementById('audio-file');
+const delayInput = document.getElementById('delay-input');
 
-document.addEventListener('DOMContentLoaded', function() {
-    const audioFileInput = document.querySelector('.audio-file');
-    const delayInput = document.querySelector('.delay-input');
-    const playButton = document.querySelector('.play-pause-button');
-    const stopButton = document.querySelector('.stop-button');
-    const progressBar = document.querySelector('.progress');
+// Play song
+function playSong() {
+  musicContainer.classList.add('play');
+  playBtn.querySelector('svg').innerHTML = '<path d="M5.5 3.5v9h1v-9h-1zm4 0v9h1v-9h-1z"/>'; // Pause icon
+  audio.play();
+}
 
-    let delayTimer;
-    let audio = new Audio();
+// Pause song
+function pauseSong() {
+  musicContainer.classList.remove('play');
+  playBtn.querySelector('svg').innerHTML = '<path d="M11.596 8.697l-6.363 3.692V4.005l6.363 3.692z"/>'; // Play icon
+  audio.pause();
+}
 
-    // Update the progress bar as the audio plays
-    audio.addEventListener('timeupdate', function() {
-        let percentage = (audio.currentTime / audio.duration) * 100;
-        progressBar.style.width = percentage + '%';
-    });
+// Update progress bar
+function updateProgress(e) {
+  const { duration, currentTime } = e.srcElement;
+  const progressPercent = (currentTime / duration) * 100;
+  progress.style.width = `${progressPercent}%`;
+}
 
-    // When the audio ends, start it again after the delay
-    audio.addEventListener('ended', function() {
-        playAudioAfterDelay();
-    });
+// Set progress bar
+function setProgress(e) {
+  const width = this.clientWidth;
+  const clickX = e.offsetX;
+  const duration = audio.duration;
+  audio.currentTime = (clickX / width) * duration;
+}
 
-    audioFileInput.addEventListener('change', function() {
-        const files = audioFileInput.files;
-        if (files.length > 0) {
-            const file = files[0];
-            audio.src = URL.createObjectURL(file);
-            progressBar.style.width = '0%'; // Reset progress bar
-        }
-    });
+// Event listeners
+playBtn.addEventListener('click', () => {
+  const isPlaying = musicContainer.classList.contains('play');
+  if (isPlaying) {
+    pauseSong();
+  } else {
+    playSong();
+  }
+});
 
-    function playAudioAfterDelay() {
-        clearTimeout(delayTimer); // Clear any existing timers
-        delayTimer = setTimeout(() => {
-            audio.currentTime = 0; // Reset the audio to start
-            audio.play();
-            playButton.textContent = 'Pause'; // Change to pause symbol
-        }, delayInput.value * 1000); // Delay in milliseconds
-    }
+// Change song
+audioFileInput.addEventListener('change', function() {
+  const files = audioFileInput.files;
+  if (files.length > 0) {
+    const file = files[0];
+    audio.src = URL.createObjectURL(file);
+    playSong();
+  }
+});
 
-    playButton.addEventListener('click', function() {
-        if (audio.paused) {
-            playAudioAfterDelay();
-        } else {
-            audio.pause();
-            playButton.textContent = 'Play'; // Change to play symbol
-        }
-    });
+// Time/song update
+audio.addEventListener('timeupdate', updateProgress);
 
-    stopButton.addEventListener('click', function() {
-        clearTimeout(delayTimer);
-        audio.pause();
-        audio.currentTime = 0; // Reset the audio to start
-        progressBar.style.width = '0%'; // Reset progress bar
-        playButton.textContent = 'Play'; // Change to play symbol
-    });
+// Click on progress bar
+progressContainer.addEventListener('click', setProgress);
+
+// Song ends
+audio.addEventListener('ended', function() {
+  let delay = parseInt(delayInput.value, 10);
+  setTimeout(function() {
+    playSong();
+  }, delay * 1000);
 });
