@@ -1,73 +1,157 @@
-
-/* Import Roboto font */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
 body {
-    font-family: 'Roboto', sans-serif;
     display: flex;
+    height: 100vh;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     margin: 0;
-    background-color: #333;
+    background-color: #f0f0f0;
+    font-family: 'Roboto', sans-serif;
 }
 
+span {
+    color: white;
+    text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
+    0px 8px 13px rgba(0,0,0,0.1),
+    0px 18px 23px rgba(0,0,0,0.1);
+}
+.file-input-text {
+    margin-left: 20px;
+    text-shadow: 0px 4px 3px rgba(1,1,1,1.8),
+                0px 8px 13px rgba(1,1,1,1.8),
+                0px 18px 23px rgba(1,1,1,1.8);
+}
 .audio-player {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    background: #fff;
+    background-image: url(https://encompass.pics/images/2023/11/06/jdm.pd_just_the_texture_fo_short_green_grass_in_super_high_reso_0c91a8f2-51e8-451a-9f1c-f50440150033.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 20px;
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-.controls {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding: 10px 0;
+    flex-direction: column;
+    align-items: center;
 }
 
-.play-pause-button,
-.stop-button {
+.playback-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.audio-input {
+    background-color: #14704d00;
+    color: rgba(10, 75, 30, 0)!important;
+    width: 40%;
+    height: 2%;
     padding: 10px 20px;
-    border: none;
-    border-radius: 25px;
-    background-color: #6200ee;
-    color: #fff;
+    border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
 }
 
-.play-pause-button:hover,
-.stop-button:hover {
-    background-color: #3700b3;
+/* Apply the animation on hover */
+.audio-input:hover {
+    background-image: linear-gradient(1240deg, #14704d, #7a4747, #1d2924, #701e55);
+    background-size: 800% 800%;
+    animation: gradient 5s ease-in-out infinite;
 }
 
-.delay-input,
-.audio-file {
+.audio-input .upload-icon {
+    width: 30px;
+    height: 30px;    
+    transition: background-image 0.5s ease-in-out; /* Smooth transition for the hover effect */
+}
+.audio-input:hover {
+    background-color: #051525b2;
+}
+
+.control-btn {
+    background: #007bff;
+    border: 2px solid #0056b3;
+    border-radius: 50%; /* Make it circular */
+    width: 50px; /* Set a specific size for the button */
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+    color: white; /* Change the color of SVG icon */
+}
+
+.control-btn:hover {
+    background-color: #0056b3;
+}
+
+.control-btn svg {
+    width: 30px; /* Adjust the size of SVG to fit the button */
+    height: 30px;
+
+.slider-container {
+    display: flex;
+    align-items: center;
+}
+
+.delay-slider {
+    margin-right: 10px;
+}
+
+.slider-value {
+    font-size: 16px;
+    background-color: #14704d;
+    padding: 5px;
+    color: rgb(255, 255, 255)!important;
+}
+
+/* Hide the default controls to use custom button */
+#audio {
+    display: none!important;
+}
+}
+.audio {
+    display: hidden!important;
+}
+input::file-selector-button {
+    color: rgba(255, 255, 255, 0);
+    border-radius: 200px;
+    background-color: #14704d;
+    background-image: linear-gradient(270deg, #14704d, #838383, #14704d, #838383);
+    background-image:url("https://encompass.pics/images/2023/11/07/upload-1118929_960_720.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 5px;
+    border: solid;
+    box-shadow: 0px 0px 0px rgba(34, 56, 166, 0.2) inset,
+                5px -4px 7px rgba(34, 56, 166, 0.2) inset,
+                11px -8px 13px rgba(34, 56, 166, 0.2) inset;
+    padding: 20px 20px;
+    font-size: 12px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    padding: 10px;
-    margin: 0 10px;
-    border: none;
-    border-radius: 5px;
-}
-
-.timeline {
-    width: 100%;
-    height: 5px;
-    background-color: #ddd;
-    margin-top: 10px;
-}
-
-.progress {
-    height: 100%;
-    width: 0%;
-    background-color: #6200ee;
-    transition: width 0.5s ease;
+    height: auto;
+}   
+input::file-selector-button:after {
+    content: 'Upload';
+    color: black;
 }

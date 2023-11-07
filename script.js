@@ -1,57 +1,41 @@
-
 document.addEventListener('DOMContentLoaded', function() {
-    const audioFileInput = document.querySelector('.audio-file');
-    const delayInput = document.querySelector('.delay-input');
-    const playButton = document.querySelector('.play-pause-button');
-    const stopButton = document.querySelector('.stop-button');
-    const progressBar = document.querySelector('.progress');
+    const audio = document.getElementById('audio');
+    const playBtn = document.getElementById('play-btn');
+    const audioFileInput = document.getElementById('audio-file');
+    const delaySlider = document.getElementById('delay-slider');
+    const sliderValue = document.getElementById('slider-value');
 
-    let delayTimer;
-    let audio = new Audio();
+    // Update slider value display
+    delaySlider.oninput = function() {
+        sliderValue.textContent = this.value + 's';
+    };
 
-    // Update the progress bar as the audio plays
-    audio.addEventListener('timeupdate', function() {
-        let percentage = (audio.currentTime / audio.duration) * 100;
-        progressBar.style.width = percentage + '%';
-    });
-
-    // When the audio ends, start it again after the delay
-    audio.addEventListener('ended', function() {
-        playAudioAfterDelay();
-    });
-
-    audioFileInput.addEventListener('change', function() {
-        const files = audioFileInput.files;
-        if (files.length > 0) {
-            const file = files[0];
-            audio.src = URL.createObjectURL(file);
-            progressBar.style.width = '0%'; // Reset progress bar
-        }
-    });
-
-    function playAudioAfterDelay() {
-        clearTimeout(delayTimer); // Clear any existing timers
-        delayTimer = setTimeout(() => {
-            audio.currentTime = 0; // Reset the audio to start
-            audio.play();
-            playButton.textContent = 'Pause'; // Change to pause symbol
-        }, delayInput.value * 1000); // Delay in milliseconds
-    }
-
-    playButton.addEventListener('click', function() {
+    // Play or pause the audio
+    playBtn.onclick = function() {
         if (audio.paused) {
-            playAudioAfterDelay();
+            audio.play();
+            // Change icon to pause
+            this.innerHTML = '<svg viewBox="0 0 16 16" class="bi bi-pause-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3.5v9h1v-9h-1zm4 0v9h1v-9h-1z"/></svg>';
         } else {
             audio.pause();
-            playButton.textContent = 'Play'; // Change to play symbol
+            // Change icon to play
+            this.innerHTML = '<svg viewBox="0 0 16 16" class="bi bi-play-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M11.596 8.697l-6.363 3.692V4.005l6.363 3.692z"/></svg>';
         }
-    });
+    };
 
-    stopButton.addEventListener('click', function() {
-        clearTimeout(delayTimer);
-        audio.pause();
-        audio.currentTime = 0; // Reset the audio to start
-        progressBar.style.width = '0%'; // Reset progress bar
-        playButton.textContent = 'Play'; // Change to play symbol
-    });
+    // Load audio file
+    audioFileInput.onchange = function() {
+        if (this.files && this.files[0]) {
+            audio.src = URL.createObjectURL(this.files[0]);
+            audio.load();
+            playBtn.disabled = false; // Enable the play button
+        }
+    };
+
+    // Loop the audio based on the delay input
+    audio.onended = function() {
+        setTimeout(function() {
+            audio.play();
+        }, parseFloat(delaySlider.value) * 1000);
+    };
 });
